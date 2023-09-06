@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servertest-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: servertest
+  template:
+    metadata:
+      labels:
+        app: servertest
+    spec:
+      containers:
+      - name: servertest
+        image: asia-northeast3-docker.pkg.dev/project-k8s-0001/docker-registry/servertest:latest
+        ports:
+        - containerPort: 50051
+        resources:
+          limits:
+            cpu: "0.5"   # Limit CPU usage to 0.5 CPU cores
+            memory: "512Mi"  # Limit memory usage to 512 megabytes
+          requests:
+            cpu: "0.25"   # Request a minimum of 0.25 CPU cores
+            memory: "256Mi"  # Request a minimum of 256 megabytes
